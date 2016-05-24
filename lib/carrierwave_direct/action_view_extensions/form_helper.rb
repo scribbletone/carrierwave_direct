@@ -18,14 +18,14 @@ module CarrierWaveDirect
         options = args.extract_options!
 
         html_options = {
-          :multipart => true 
+          :multipart => true
         }.update(options[:html] || {})
 
         form_for(
           record,
           *(args << options.merge(
             :builder => CarrierWaveDirect::FormBuilder,
-            :url => record.direct_fog_url,
+            :url => options[:url] || record.direct_fog_url,
             :html => html_options,
             :authenticity_token => false,
             :include_id => false
@@ -38,4 +38,3 @@ module CarrierWaveDirect
 end
 
 ActionView::Base.send :include, CarrierWaveDirect::ActionViewExtensions::FormHelper
-
